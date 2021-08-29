@@ -4,10 +4,10 @@
 // @namespace    https://wuxintlh.github.io
 // @namespace    https://space.bilibili.com/29058270
 // @namespace    https://www.acfun.cn/u/57391284
-// @version      0.3.9.2
+// @version      0.3.9.3
 // @description  更改ab站背景的懒人脚本，位置在页面左下角.
 // @author       桜ミク
-// @icon         http://smiku.top/sakura.png
+// @icon         http://github.smiku.site/sakura.png
 // @match        *://*.bilibili.com/*
 // @match        https://message.bilibili.com/*
 // @match        https://t.bilibili.com/*
@@ -30,7 +30,10 @@ var bcurl = '';
 var host = window.location.host;
 var domain = document.domain;
 var lc;
-domain == 'bilibili.com' ? lc = 0:lc = 1;
+var body = document.querySelector('body');
+//获取屏幕高度
+sh=document.documentElement.clientHeight;
+domain == 'bilibili.com'||'www.bilibli.com'|| 'live.bilibili.com'||'managa.bilibili.com'||'t.bilibili.com' ? lc = 0:lc = 1;
 //初始化背景div
 if(lc==0){
     set();
@@ -39,29 +42,34 @@ if(lc==0){
         set();
     },5000);
 }
-var body = document.querySelector('body');
 
 //bcb代表b站默认背景,bca代表a站默认背景
 var bcb = ['https://i0.hdslb.com/bfs/article/d12fee446e2533206e0b04024c39e00a40c4bc4c.png@1320w_912h.webp','https://i0.hdslb.com/bfs/article/54616fdbb9bed40ea2cf8540f8517b11c9aa4ad3.jpg@1320w_868h.webp',
-         'https://i0.hdslb.com/bfs/article/67a82d9f881dd41dd6709322595340bf9e6cf46a.jpg@1320w_788h.webp','https://i0.hdslb.com/bfs/album/658ab52e2d631f9d974112e2d5b4cab476e3f61d.jpg',
-        'https://i0.hdslb.com/bfs/vc/c255f51c594cf6e724fb9f04975fae7e7eb8b876.jpg@2000w_1e.webp','https://iknow-pic.cdn.bcebos.com/42a98226cffc1e17c52713054290f603738de96e?x-bce-process=image/resize,m_lfit,w_600,h_800,limit_1'];
+           'https://i0.hdslb.com/bfs/article/67a82d9f881dd41dd6709322595340bf9e6cf46a.jpg@1320w_788h.webp','https://i0.hdslb.com/bfs/album/658ab52e2d631f9d974112e2d5b4cab476e3f61d.jpg',
+           'https://i0.hdslb.com/bfs/vc/c255f51c594cf6e724fb9f04975fae7e7eb8b876.jpg@2000w_1e.webp','https://iknow-pic.cdn.bcebos.com/42a98226cffc1e17c52713054290f603738de96e?x-bce-process=image/resize,m_lfit,w_600,h_800,limit_1'];
 var bca = ['https://w.wallhaven.cc/full/g8/wallhaven-g8kd37.jpg','https://img.tt98.com/d/file/96kaifa/201905101622281/001.jpg','https://img.tt98.com/d/file/tt98/2019092618001803/001.jpg',
-          'https://w.wallhaven.cc/full/zm/wallhaven-zmemxg.png','https://w.wallhaven.cc/full/rd/wallhaven-rdyyjm.png','https://w.wallhaven.cc/full/od/wallhaven-odkp95.jpg'];
+           'https://w.wallhaven.cc/full/zm/wallhaven-zmemxg.png','https://w.wallhaven.cc/full/rd/wallhaven-rdyyjm.png','https://w.wallhaven.cc/full/od/wallhaven-odkp95.jpg'];
 
 //初始化侧边栏按钮
-if (host != 'live.bilibili.com') {
-    spandiv(body);
-    spandivD(body);
-} else {
-    var main = document.querySelector('.live-room-app').querySelector('.z-app-content');
-    if (main != undefined) {
-        spandiv(main);
-        spandivD(main);
-    } else {
+if(lc==0){
+    if (host != 'live.bilibili.com') {
         spandiv(body);
         spandivD(body);
-    }
-};
+    } else {
+        var main = document.querySelector('.live-room-app').querySelector('.z-app-content');
+        if (main != undefined) {
+            spandiv(main);
+            spandivD(main);
+        } else {
+            spandiv(body);
+            spandivD(body);
+        }
+    };
+}else{
+    spandiv(body);
+    spandivD(body);
+}
+
 
 
 window.addEventListener('scroll', function() {
@@ -140,8 +148,6 @@ function set() {
     }
     div.className = 'SakuraBackground';
     var ifbcurl = window.localStorage.getItem('bcurl');
-    //获取屏幕高度
-    sh=document.documentElement.clientHeight;
     if (ifbcurl != '' && ifbcurl != null) {
         bcurl = window.localStorage.getItem('bcurl'); //保存的背景
         setbc(bcurl);
@@ -152,20 +158,35 @@ function set() {
 };
 //背景设置
 function setbc(bcurl) {
-    var div = document.querySelector('.SakuraBackground');
-    div.style.background = 'url("' + bcurl + '")';
-    div.style.backfroundRepeat = 'no-repeat';
-    div.style.position = 'fixed';
-    div.style.backgroundPosition = 'center 0';
-    div.style.backgroundSize = 'cover';
-    div.style.zoom = '1';
-    div.style.width = '100%';
-    div.style.height = '100%';
-    div.style.top = '0';
-    div.style.left = '0';
-    div.style.webkitBackgroundSize = 'cover';
-    div.style.zIndex = '-1';
-    div.className = 'SakuraBackground';
+    if(lc==0){
+        var div = document.querySelector('.SakuraBackground');
+        div.style.background = "url('" + bcurl + "')";
+        div.style.backfroundRepeat = 'no-repeat';
+        div.style.position = 'fixed';
+        div.style.backgroundPosition = 'center 0';
+        div.style.backgroundSize = 'cover';
+        div.style.zoom = '1';
+        div.style.width = '100%';
+        div.style.height = '100%';
+        div.style.top = '0';
+        div.style.left = '0';
+        div.style.webkitBackgroundSize = 'cover';
+        div.style.zIndex = '-1';
+        div.className = 'SakuraBackground';
+    } else {
+        div = document.getElementById('main');
+        div.style.background = 'url("' + bcurl + '")';
+        div.style.backfroundRepeat = 'no-repeat';
+        div.style.backgroundPosition = 'center 0';
+        div.style.backgroundSize = 'cover';
+        div.style.zoom = '1';
+        div.style.width = '100%';
+        div.style.height = '100%';
+        div.style.top = '0';
+        div.style.left = '0';
+        div.style.webkitBackgroundSize = 'cover';
+        div.style.zIndex = '-1';
+    }
 }
 
 //提供默认ab站六个背景图
@@ -284,7 +305,7 @@ function spandivD(target) {
     img = document.createElement('img');
     div.appendChild(img);
     //第四张
-   if(lc==0){
+    if(lc==0){
         img.src = bcb[3];
     }else{
         img.src = bca[3];
