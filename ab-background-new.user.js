@@ -5,7 +5,7 @@
 // @github       https://github.com/wuxintlh/
 // @githubBoke   https://wuxintlh.github.io
 // @acfun        https://www.acfun.cn/u/57391284
-// @version      1.0.0.5-beta
+// @version      1.0.1.0
 // @description  更改ab站背景的懒人脚本
 // @author       桜ミク
 // @match        https://www.bilibili.com/*
@@ -28,9 +28,8 @@
 // @QQgroup      https://jq.qq.com/?_wv=1027&k=0ewDiWw1
 // @grant        none
 // @require https://greasyfork.org/scripts/436151-ab%E7%AB%99%E8%83%8C%E6%99%AF%E6%9B%B4%E6%94%B9css%E8%84%9A%E6%9C%AC/code/ab%E7%AB%99%E8%83%8C%E6%99%AF%E6%9B%B4%E6%94%B9css%E8%84%9A%E6%9C%AC.js?version=992415
-// @namespace https://space.bilibili.com/29058270
 // ==/UserScript==
- 
+
 //#region 全局变量
 /*
     screenHeight 代表屏幕高度
@@ -43,13 +42,12 @@
     i,j未循环元素
  */
 var screenHeight, bcurl, host, domain, abChosen, body, main, i, j, pathname;
-var bcb = ['https://i0.hdslb.com/bfs/article/d12fee446e2533206e0b04024c39e00a40c4bc4c.png@1320w_912h.webp', 'https://i0.hdslb.com/bfs/article/54616fdbb9bed40ea2cf8540f8517b11c9aa4ad3.jpg@1320w_868h.webp', 'https://pic.imgdb.cn/item/61ee2a242ab3f51d9107641f.png', 'https://i0.hdslb.com/bfs/album/658ab52e2d631f9d974112e2d5b4cab476e3f61d.jpg', 'https://i0.hdslb.com/bfs/vc/c255f51c594cf6e724fb9f04975fae7e7eb8b876.jpg@2000w_1e.webp', 'https://iknow-pic.cdn.bcebos.com/42a98226cffc1e17c52713054290f603738de96e?x-bce-process=image/resize,m_lfit,w_600,h_800,limit_1'];
-var bca = ['https://w.wallhaven.cc/full/g8/wallhaven-g8kd37.jpg', 'https://img.tt98.com/d/file/96kaifa/201905101622281/001.jpg', 'https://img.tt98.com/d/file/tt98/2019092618001803/001.jpg', 'https://w.wallhaven.cc/full/zm/wallhaven-zmemxg.png', 'https://w.wallhaven.cc/full/rd/wallhaven-rdyyjm.png', 'https://iknow-pic.cdn.bcebos.com/42a98226cffc1e17c52713054290f603738de96e?x-bce-process=image/resize,m_lfit,w_600,h_800,limit_1'];
- 
+var bcb = ['https://i0.hdslb.com/bfs/article/d12fee446e2533206e0b04024c39e00a40c4bc4c.png@1320w_912h.webp', 'https://i0.hdslb.com/bfs/article/54616fdbb9bed40ea2cf8540f8517b11c9aa4ad3.jpg@1320w_868h.webp', 'https://pic.imgdb.cn/item/61ee2a242ab3f51d9107641f.png', 'https://i0.hdslb.com/bfs/album/658ab52e2d631f9d974112e2d5b4cab476e3f61d.jpg', 'https://i0.hdslb.com/bfs/vc/c255f51c594cf6e724fb9f04975fae7e7eb8b876.jpg@2000w_1e.webp', 'https://w.wallhaven.cc/full/o3/wallhaven-o31p97.jpg'];
+var bca = ['https://img1.imgtp.com/2022/05/19/qqKLSTQo.png', 'https://img.tt98.com/d/file/96kaifa/201905101622281/001.jpg', 'https://img.tt98.com/d/file/tt98/2019092618001803/001.jpg', 'https://w.wallhaven.cc/full/g7/wallhaven-g79ov3.jpg', 'https://w.wallhaven.cc/full/rd/wallhaven-rdyyjm.png', 'https://w.wallhaven.cc/full/o3/wallhaven-o31p97.jpg'];
 //#endregion
- 
+
 //#region 主体js脚本
- 
+
 window.addEventListener('load', (function() {
     //首先判断a或b站点
     screenHeight = document.documentElement.clientHeight;
@@ -57,7 +55,7 @@ window.addEventListener('load', (function() {
     host = window.location.host;
     pathname = window.location.pathname;
     body = document.querySelector('body');
-    if (domain == 'bilibili.com' || domain == 'www.bilibili.com' || domain == 'live.bilibili.com' || domain == 't.bilibili.com' || domain == 'h.bilibili.com') {
+    if (domain == 'bilibili.com' || domain == 'www.bilibili.com' || domain == 'live.bilibili.com' || domain == 't.bilibili.com' || domain == 'h.bilibili.com' || domain == 'workshop.bilibili.com') {
         abChosen = 0;
     } else {
         abChosen = 1;
@@ -87,11 +85,11 @@ window.addEventListener('load', (function() {
         }
     }
 }))
- 
+
 //#endregion
- 
+
 //#region 其他脚本
- 
+
 //创建左下角box窗体
 function boxSetting(parentNode) {
     var spanRoller = document.createElement('span');
@@ -123,7 +121,7 @@ function boxSetting(parentNode) {
         Ulli.appendChild(img);
         img.src = abChosen == 0 ? bcb[i] : bca[i];
     }
- 
+
     //添加默认图片点击更换背景事件
     backgroundDefaultClickToChange = document.querySelector('.backgroundDefaultClickToChange');
     var imgAll = backgroundDefaultClickToChange.querySelectorAll('img');
@@ -135,8 +133,8 @@ function boxSetting(parentNode) {
             window.localStorage.setItem('bcurl', bcChangeUrl);
         })
     }
- 
- 
+
+
     var backgroundInputUrl = document.createElement('input');
     var backgroundClickToChange = document.createElement('button');
     changeBoxTwo.appendChild(backgroundInputUrl);
@@ -146,7 +144,7 @@ function boxSetting(parentNode) {
     backgroundInputUrl.type = 'text';
     backgroundClickToChange.className = 'backgroundClickToChange';
     backgroundClickToChange.innerText = '点击更改背景';
- 
+
     //添加box是否显示的点击事件
     setTimeout(function() {
         spanRoller = document.querySelector('.sakuraSpanRoller');
@@ -158,7 +156,7 @@ function boxSetting(parentNode) {
                 divBackgroundSettingsBox.style.display = 'none';
             }
         })
-    }, 3000);
+    }, 1000);
     //添加url背景更改的点击事件
     backgroundClickToChange = document.querySelector('.backgroundClickToChange');
     backgroundClickToChange.addEventListener('click', function() {
@@ -173,7 +171,7 @@ function boxSetting(parentNode) {
         }
     });
 }
- 
+
 //滑动动画
 function animateLeft(obj, target, callback) {
     clearInterval(obj.timer);
@@ -190,7 +188,7 @@ function animateLeft(obj, target, callback) {
         }
     }, 10)
 };
- 
+
 function animateBottom(obj, target, callback) {
     clearInterval(obj.timer);
     obj.timer = setInterval(function() {
@@ -206,7 +204,7 @@ function animateBottom(obj, target, callback) {
         }
     }, 10)
 };
- 
+
 //背景设置
 function backgroundSet(bcurl) {
     if (abChosen == 0) {
@@ -227,7 +225,6 @@ function backgroundSet(bcurl) {
             div.style.zIndex = '-1';
             div.className = 'SakuraBackground';
         } else {
-            setTimeout(10000);
             div = document.querySelector('#app');
             //var ddiv = document.createElement('div');
             //div.appendChild(ddiv);
@@ -241,11 +238,11 @@ function backgroundSet(bcurl) {
             div.style.backgroundAttachment = "fixed";
             div.className = 'SakuraBackground';
         }
- 
+
     } else if (abChosen == 1) {
         var aUrl = document.location;
         if (aUrl.pathname == '\/') {
-            div = document.querySelector('.SakuraBackground');
+            var div = document.querySelector('.SakuraBackground');
             div.style.backgroundImage = 'url("' + bcurl + '")';
             div.style.backfroundRepeat = 'no-repeat';
             div.style.position = 'fixed';
@@ -260,19 +257,17 @@ function backgroundSet(bcurl) {
             div.style.zIndex = '-1';
             div.className = 'SakuraBackground';
         } else {
-            setTimeout(function() {
-                var main = document.querySelector('#main');
-                //div = document.createElement('div');
-                //main.appendChild(div);
-                main.style.background = 'url("' + bcurl + '") center 0px/cover';
-                main.style.backfroundRepeat = 'no-repeat';
-                main.style.backgroundPosition = 'center center';
-                main.style.backgroundSize = '100% 100%';
-                main.style.zIndex = '-1';
-                main.style.webkitBackgroundSize = 'cover';
-                main.style.backgroundAttachment = "fixed";
-                main.className = 'SakuraBackground';
-            }, 5000)
+            var main = document.querySelector('#main');
+            //div = document.createElement('div');
+            //main.appendChild(div);
+            main.style.background = 'url("' + bcurl + '") center 0px/cover';
+            main.style.backfroundRepeat = 'no-repeat';
+            main.style.backgroundPosition = 'center center';
+            main.style.backgroundSize = '100% 100%';
+            main.style.zIndex = '-1';
+            main.style.webkitBackgroundSize = 'cover';
+            main.style.backgroundAttachment = "fixed";
+            main.className = 'SakuraBackground';
         }
     }
 }
@@ -297,7 +292,7 @@ function setDefaultBackground() {
     }
 };
 //#endregion
- 
+
 /**
     background-image: url(https://www.smiku.site/wp-content/uploads/2022/03/76026738_p0.png);
     background-position: center center;
